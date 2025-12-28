@@ -2,101 +2,54 @@
 //  StartPage.swift
 //  GoodWay
 //
-//  Created by Daniel Asamudo on 2025-12-26.
+//  Created by Daniel Asamudo on 2025-12-28.
 //
 
 import SwiftUI
 
 struct StartPage: View {
-    @ObservedObject var settings: UserSettings
-    @ObservedObject var sensitiveInfo: SensitiveInfo
-    @State var incorrectPassAlert = false
-    @State var existingUser = false
     var body: some View {
-        
-        if (settings.loggedIn) {
-            ContentView(settings: settings)
-        } else {
-            
-            NavigationStack {
+        NavigationStack {
+            ZStack {
+                
+                LinearGradient(
+                    colors: [Color.green.opacity(0.50), .clear], startPoint: .bottomLeading, endPoint: .topTrailing
+                )
+                .ignoresSafeArea()
                 VStack {
-                    
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                    Text("Sign In Page")
-                        .font(.title)
-                    
-                    TextField("Email Goes Here...", text: $settings.emailAddress)
-                        .textInputAutocapitalization(.never)
-                        .disableAutocorrection(true)
-                        .padding(.leading, 10)
-                        .frame(maxWidth: 300, maxHeight: 40)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 7)
-                                .stroke(Color.green, style: StrokeStyle(
-                                    lineWidth: 3
-                                ))
-                        )
-                        .padding(10)
-                    SecureField("Password Goes Here...", text: $settings.password)
-                        .textInputAutocapitalization(.never)
-                        .disableAutocorrection(true)
-                        .padding(.leading, 10)
-                        .frame(maxWidth: 300, maxHeight: 40)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 7)
-                                .stroke(Color.green, style: StrokeStyle(
-                                    lineWidth: 3
-                                ))
-                        )
-                        .padding(.bottom, 20)
-                        .alert("Incorrect Email or Password.", isPresented: $incorrectPassAlert) {
-                            Button("Acknowledge", role: .cancel) {}
-                        } message: {
-                            Text("Please enter a different email or password to continue.")
-                        }
-                    Button {
-                        if (zip(sensitiveInfo.usernames, sensitiveInfo.passwords).contains {$0 == settings.emailAddress && $1 == settings.password} ) {
-                            settings.loggedIn = true
-                        } else {
-                            incorrectPassAlert = true
-                            
-                        }
-                        
-                    } label: {
-                        Text("Sign In")
-                            .foregroundStyle(Color.white)
-                            .backgroundStyle(Color.green)
-                            .frame(maxWidth: 200, maxHeight: 30)
-                            .background(
-                                RoundedRectangle(cornerRadius: 7)
-                                    .fill(Color.green)
-                            )
-                        
-                        
+                    Spacer()
+                    ZStack {
+                        Text("GoodWay")
+                            .font(.largeTitle)
+                            .foregroundStyle(.green)
+                            .fontWeight(.bold)
                     }
-                    .padding(.bottom, 30)
+                    Spacer()
                     NavigationLink {
-                        SignUpPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo(), existingUser: existingUser)
+                        SignInPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
                     } label: {
-                        Text("Sign Up")
-                            .frame(maxWidth: 200, maxHeight: 30)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 7)
-                                    .stroke(Color.green, style: StrokeStyle(lineWidth: 3))
+                        Text("Get Started")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: 300, maxHeight: 50)
+                            .background(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(.green)
                             )
-                        
-                        
                     }
+                    .padding(10)
+                    Text("By proceeding to use GoodWay, you agree to our terms and conditions.")
+                        .frame(maxWidth: 300)
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
                     
                 }
             }
-            }
-        
         }
-        
     }
+}
 
 #Preview {
-    StartPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
+    StartPage()
 }

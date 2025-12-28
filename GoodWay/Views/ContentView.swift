@@ -13,21 +13,32 @@ class UserSettings: ObservableObject {
     @Published var password: String = "" 
     
 }
+
 struct ContentView: View {
     @ObservedObject var settings: UserSettings
     var body: some View {
-        VStack {
-            if (settings.loggedIn) {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
-            } else {
-                StartPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
+        NavigationSplitView {
+            VStack {
+                if (settings.loggedIn) {
+                    Button {
+                        
+                    } label: {
+                        Text("Math")
+                            .frame(maxWidth: 400, maxHeight: 100)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.green, style: StrokeStyle(lineWidth: 3))
+                                )
+                    }
+                } else {
+                    SignInPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
+                }
+                
             }
-            
+            .padding()
+        } detail: {
+            Text("Please Select an option")
         }
-        .padding()
     }
 }
 

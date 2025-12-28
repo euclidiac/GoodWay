@@ -11,7 +11,7 @@ import SwiftUI
 struct GoodWayApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(settings: UserSettings())
+            StartPage()
         }
     }
 }

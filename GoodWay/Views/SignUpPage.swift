@@ -14,7 +14,7 @@ struct SignUpPage: View {
     var body: some View {
         
         if (settings.loggedIn) {
-            ContentView(settings: settings)
+            MainMenu()
         } else {
             
             VStack {
@@ -73,5 +73,5 @@ struct SignUpPage: View {
     }
 
 #Preview {
-    StartPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
+    SignInPage(settings: UserSettings(), sensitiveInfo: SensitiveInfo())
 }
